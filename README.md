@@ -11,9 +11,75 @@ npx cap sync
 
 ## API
 
-<docgen-index></docgen-index>
+<docgen-index>
+
+* [`getInfo()`](#getinfo)
+* [`checkPermissions()`](#checkpermissions)
+* [`requestPermissions()`](#requestpermissions)
+* [Interfaces](#interfaces)
+* [Type Aliases](#type-aliases)
+
+</docgen-index>
 
 <docgen-api>
-<!-- run docgen to generate docs from the source -->
-<!-- More info: https://github.com/ionic-team/capacitor-docgen -->
+<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### getInfo()
+
+```typescript
+getInfo() => Promise<RestrictedDeviceInfoResult>
+```
+
+**Returns:** <code>Promise&lt;<a href="#restricteddeviceinforesult">RestrictedDeviceInfoResult</a>&gt;</code>
+
+--------------------
+
+
+### checkPermissions()
+
+```typescript
+checkPermissions() => Promise<PermissionStatus>
+```
+
+**Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
+
+--------------------
+
+
+### requestPermissions()
+
+```typescript
+requestPermissions() => Promise<PermissionStatus>
+```
+
+**Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
+
+--------------------
+
+
+### Interfaces
+
+
+#### RestrictedDeviceInfoResult
+
+| Prop         | Type                |
+| ------------ | ------------------- |
+| **`imei`**   | <code>string</code> |
+| **`serial`** | <code>string</code> |
+
+
+#### PermissionStatus
+
+| Prop       | Type                                                        |
+| ---------- | ----------------------------------------------------------- |
+| **`info`** | <code><a href="#permissionstate">PermissionState</a></code> |
+
+
+### Type Aliases
+
+
+#### PermissionState
+
+<code>'prompt' | 'prompt-with-rationale' | 'granted' | 'denied'</code>
+
 </docgen-api>

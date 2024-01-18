@@ -1,10 +1,22 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { AmdroidRestrictedInfoPlugin } from './definitions';
+import type {
+  AndroidRestrictedInfoPlugin,
+  PermissionStatus,
+  RestrictedDeviceInfoResult,
+} from './definitions';
 
-export class AmdroidRestrictedInfoWeb extends WebPlugin implements AmdroidRestrictedInfoPlugin {
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+export class AndroidRestrictedInfoWeb
+  extends WebPlugin
+  implements AndroidRestrictedInfoPlugin
+{
+  getInfo(): Promise<RestrictedDeviceInfoResult> {
+    throw new Error('Method not implemented.');
+  }
+  checkPermissions(): Promise<PermissionStatus> {
+    throw new Error('Method not implemented.');
+  }
+  requestPermissions(): Promise<PermissionStatus> {
+    throw new Error('Method not implemented.');
   }
 }
