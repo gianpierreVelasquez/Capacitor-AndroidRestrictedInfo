@@ -15,7 +15,7 @@ npx cap sync
 
 * [`getInfo()`](#getinfo)
 * [`checkPermissions()`](#checkpermissions)
-* [`requestPermissions()`](#requestpermissions)
+* [`requestPermissions(...)`](#requestpermissions)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
 
@@ -46,11 +46,15 @@ checkPermissions() => Promise<PermissionStatus>
 --------------------
 
 
-### requestPermissions()
+### requestPermissions(...)
 
 ```typescript
-requestPermissions() => Promise<PermissionStatus>
+requestPermissions(permissions?: AndroidRestrictedInfoPermissions | undefined) => Promise<PermissionStatus>
 ```
+
+| Param             | Type                                                                                          |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| **`permissions`** | <code><a href="#androidrestrictedinfopermissions">AndroidRestrictedInfoPermissions</a></code> |
 
 **Returns:** <code>Promise&lt;<a href="#permissionstatus">PermissionStatus</a>&gt;</code>
 
@@ -75,11 +79,23 @@ requestPermissions() => Promise<PermissionStatus>
 | **`info`** | <code><a href="#permissionstate">PermissionState</a></code> |
 
 
+#### AndroidRestrictedInfoPermissions
+
+| Prop              | Type                        |
+| ----------------- | --------------------------- |
+| **`permissions`** | <code>'phoneState'[]</code> |
+
+
 ### Type Aliases
 
 
 #### PermissionState
 
 <code>'prompt' | 'prompt-with-rationale' | 'granted' | 'denied'</code>
+
+
+#### AndroidRestrictedInfoPermissionType
+
+<code>'phoneState'</code>
 
 </docgen-api>
