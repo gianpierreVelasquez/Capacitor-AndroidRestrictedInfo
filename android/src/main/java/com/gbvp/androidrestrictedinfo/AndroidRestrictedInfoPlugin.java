@@ -19,7 +19,7 @@ import com.getcapacitor.annotation.PermissionCallback;
 @CapacitorPlugin(name = "AndroidRestrictedInfo", permissions = {@Permission(alias = AndroidRestrictedInfoPlugin.PHONE_STATE, strings = {Manifest.permission.READ_PHONE_STATE})})
 public class AndroidRestrictedInfoPlugin extends Plugin {
 
-    static final String PHONE_STATE = "phone_state";
+    static final String PHONE_STATE = "phoneState";
     private AndroidRestrictedInfo implementation;
 
     @Override
@@ -52,10 +52,14 @@ public class AndroidRestrictedInfoPlugin extends Plugin {
 
     @PluginMethod
     public void requestPermissions(PluginCall call) {
-        if (implementation.isPhoneStateEnabled() != PackageManager.PERMISSION_GRANTED) {
-            super.requestPermissions(call);
+        if (implementation.isPhoneStateEnabled() == PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
+                getDeviceInfo(call);
+            } else {
+                call.unavailable("Not available on Android API 26 or earlier.");
+            }
         } else {
-            call.reject("Phone state permission is not granted.");
+            super.requestPermissions(call);
         }
     }
 
@@ -85,10 +89,6 @@ public class AndroidRestrictedInfoPlugin extends Plugin {
     }
 
     private String getAlias(PluginCall call) {
-        String alias = AndroidRestrictedInfoPlugin.PHONE_STATE;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            alias = AndroidRestrictedInfoPlugin.PHONE_STATE;
-        }
-        return alias;
+        return AndroidRestrictedInfoPlugin.PHONE_STATE;
     }
 }
