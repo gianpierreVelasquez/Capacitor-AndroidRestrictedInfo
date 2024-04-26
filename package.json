@@ -1,6 +1,6 @@
 {
   "name": "capacitor-plugin-gbvp-android-restricted-info",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Plugin use to get Android Restricted Info like IMEI, serial, etc",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -41,7 +41,8 @@
     "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "publish": "npm publish"
   },
   "devDependencies": {
     "@capacitor/android": "^5.0.0",

@@ -1,6 +1,9 @@
 package com.gbvp.androidrestrictedinfo;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
@@ -30,24 +33,26 @@ public class AndroidRestrictedInfoPlugin extends Plugin {
         if (getPermissionState(alias) != PermissionState.GRANTED) {
             requestPermissionForAlias(alias, call, "requestPermissionsCallback");
         } else {
-            getDeviceInfo(call);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1) {
+                getDeviceInfo(call);
+            } else {
+                call.unavailable("Not available on Android API 26 or earlier.");
+            }
         }
     }
 
-    @Override
     @PluginMethod
     public void checkPermissions(PluginCall call) {
-        if (implementation.isPhoneStateEnabled()) {
+        if (implementation.isPhoneStateEnabled() != PackageManager.PERMISSION_GRANTED) {
             super.checkPermissions(call);
         } else {
             call.reject("Phone state permission is not granted.");
         }
     }
 
-    @Override
     @PluginMethod
     public void requestPermissions(PluginCall call) {
-        if (implementation.isPhoneStateEnabled()) {
+        if (implementation.isPhoneStateEnabled() != PackageManager.PERMISSION_GRANTED) {
             super.requestPermissions(call);
         } else {
             call.reject("Phone state permission is not granted.");
@@ -57,8 +62,7 @@ public class AndroidRestrictedInfoPlugin extends Plugin {
     @PermissionCallback
     private void requestPermissionsCallback(PluginCall call) {
         if (getPermissionState(AndroidRestrictedInfoPlugin.PHONE_STATE) == PermissionState.GRANTED) {
-            TelephonyManager tm = implementation.getDeviceInfo();
-            call.resolve(getJSObjectForDeviceInfo(tm));
+            getDeviceInfo(call);
         } else {
             call.reject("Phone state permission was denied");
         }
@@ -66,17 +70,17 @@ public class AndroidRestrictedInfoPlugin extends Plugin {
 
     @SuppressWarnings("MissingPermission")
     private void getDeviceInfo(PluginCall call) {
-        TelephonyManager tm = implementation.getDeviceInfo();
+        TelephonyManager tm = (TelephonyManager) getContext().getSystemService(Context.TELEPHONY_SERVICE);
         call.resolve(getJSObjectForDeviceInfo(tm));
     }
 
+    @SuppressLint({"MissingPermission"})
     private JSObject getJSObjectForDeviceInfo(TelephonyManager tm) {
         JSObject ret = new JSObject();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ret.put("imei", tm.getImei());
-            ret.put("serial", Build.getSerial());
-        }
+        ret.put("imei", tm.getDeviceId());
+         ret.put("serial", Build.SERIAL);
+
         return ret;
     }
 
