@@ -1,6 +1,7 @@
 # capacitor-plugin-gbvp-android-restricted-info
 
-Plugin use to get Android Restricted Info like IMEI, serial, etc. ** Exclusively for Android OS and API 22 to API 28 ** 
+Plugin use to get Android Restricted Info like IMEI, serial, etc. ** Exclusively for Android OS and API 22 to API 27 ** 
+Android 28 serial get UNKNOW
 
 ## Install
 
